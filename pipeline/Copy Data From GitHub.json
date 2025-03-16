@@ -102,7 +102,7 @@
 				"type": "Validation",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "GitHubMetaData",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -133,32 +133,6 @@
 				"typeProperties": {
 					"method": "GET",
 					"url": "https://github.com/anshlambagit/Netflix_Azure_Data_Engineering_Project/blob/main/RawData_AND_Notebooks"
-				}
-			},
-			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "GitHubMetaData",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "response",
-					"value": {
-						"value": "@activity('GitHubMetaData').output",
-						"type": "Expression"
-					}
 				}
 			}
 		],
