@@ -5,7 +5,14 @@
 			{
 				"name": "ForAllFiles",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "validation Github",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -91,9 +98,16 @@
 				}
 			},
 			{
-				"name": "valiDation Github",
+				"name": "validation Github",
 				"type": "Validation",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
@@ -102,6 +116,47 @@
 					},
 					"timeout": "0.12:00:00",
 					"sleep": 10
+				}
+			},
+			{
+				"name": "GitHubMetaData",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://github.com/anshlambagit/Netflix_Azure_Data_Engineering_Project/blob/main/RawData_AND_Notebooks"
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GitHubMetaData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "response",
+					"value": {
+						"value": "@activity('GitHubMetaData').output",
+						"type": "Expression"
+					}
 				}
 			}
 		],
@@ -126,6 +181,11 @@
 						"file_name": "netflix_directors.csv"
 					}
 				]
+			}
+		},
+		"variables": {
+			"response": {
+				"type": "String"
 			}
 		},
 		"annotations": []
