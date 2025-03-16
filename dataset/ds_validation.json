@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "netfilx_titles.csv",
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",
