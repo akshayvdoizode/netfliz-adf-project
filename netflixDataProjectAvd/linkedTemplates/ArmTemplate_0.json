@@ -76,7 +76,7 @@
 					"location": {
 						"type": "HttpServerLocation",
 						"relativeUrl": {
-							"value": "anshlambagit/Netflix_Azure_Data_Engineering_Project/blob/main/RawData_AND_Notebooks/@{dataset().fileName}",
+							"value": "anshlambagit/Netflix_Azure_Data_Engineering_Project/refs/heads/main/RawData_AND_Notebooks/@{dataset().fileName}",
 							"type": "Expression"
 						}
 					},
@@ -266,9 +266,11 @@
 					{
 						"name": "validation Github",
 						"type": "Validation",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
-								"activity": "Set variable1",
+								"activity": "GitHubMetaData",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -288,6 +290,8 @@
 					{
 						"name": "GitHubMetaData",
 						"type": "WebActivity",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -301,32 +305,6 @@
 							"method": "GET",
 							"headers": {},
 							"url": "https://github.com/anshlambagit/Netflix_Azure_Data_Engineering_Project/blob/main/RawData_AND_Notebooks"
-						}
-					},
-					{
-						"name": "Set variable1",
-						"type": "SetVariable",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "GitHubMetaData",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "response",
-							"value": {
-								"value": "@activity('GitHubMetaData').output",
-								"type": "Expression"
-							}
 						}
 					}
 				],
@@ -343,7 +321,7 @@
 							},
 							{
 								"folder_name": "netflix_category",
-								"file_name": "netflix_cateory.csv"
+								"file_name": "netflix_category.csv"
 							},
 							{
 								"folder_name": "netflix_countries",
