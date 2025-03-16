@@ -1,0 +1,9 @@
+{
+	"name": "netflixDataProjectAvd",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f47696de-0281-4592-84fd-0ce62525848d",
+		"tenantId": "542a4aed-eac5-488c-9021-a2b3e050e435"
+	}
+}
